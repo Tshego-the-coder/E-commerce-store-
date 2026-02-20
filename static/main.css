@@ -1,0 +1,356 @@
+/* ---------- GLOBAL ---------- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom, #f5f6fa, #e0e5f2);
+    color: #333;
+    line-height: 1.6;
+    transition: background 0.5s ease;
+}
+
+/* ---------- HEADER ---------- */
+header {
+    background: #0a74da;
+    color: #fff;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+header h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+header nav a {
+    color: #fff;
+    margin-left: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+header nav a:hover {
+    color: #ffdd59;
+    transform: scale(1.1);
+}
+
+/* ---------- MAIN CONTENT ---------- */
+main {
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* ---------- PRODUCTS ---------- */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 35px;
+}
+
+.product-card {
+    background: linear-gradient(145deg, #ffffff, #f0f3ff);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-7px) rotate(-0.5deg);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+    background: linear-gradient(145deg, #ffffff, #e0e5f2);
+}
+
+.product-card img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    transition: transform 0.3s ease;
+}
+
+.product-card img:hover {
+    transform: scale(1.05);
+}
+
+.product-card h3 {
+    margin-bottom: 10px;
+    color: #0a74da;
+    font-size: 1.3rem;
+}
+
+.product-card p {
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #555;
+}
+
+/* ---------- DELIVERY INFO EFFECT ---------- */
+.delivery {
+    background: linear-gradient(90deg, #ffdd59, #ffd32a);
+    padding: 6px 12px;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: 600;
+    color: #333;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px #ffd32a; }
+    100% { box-shadow: 0 0 15px #ffdd59; }
+}
+
+/* ---------- BUTTONS ---------- */
+.product-card button {
+    background: #ffdd59;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card button:hover {
+    background: #ffd32a;
+    transform: scale(1.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ---------- CART TABLE ---------- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+th, td {
+    padding: 15px 18px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #0a74da;
+    color: #fff;
+    font-weight: 600;
+}
+
+td form button {
+    background: #ff4757;
+    color: #fff;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+td form button:hover {
+    background: #e84118;
+    transform: scale(1.05);
+}
+
+/* ---------- QUANTITY INPUT FIX (Option 2, smaller width) ---------- */
+td input[type="number"] {
+    all: unset;             /* removes all browser styling: border, padding, background, etc. */
+    text-align: center;
+    font-weight: 500;
+    font-size: 1rem;
+    width: 40px;            /* smaller, compact width */
+}
+
+/* ---------- CART TOTAL ANIMATION ---------- */
+.total {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0a74da;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: #f0f3ff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+    50% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+    100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0,0,0,0.12); }
+}
+
+/* ---------- CART COUNTER ---------- */
+#cart-counter {
+    font-weight: 700;
+    font-size: 18px;
+    color: #0a74da;
+    margin-bottom: 20px;
+}
+
+/* ---------- CHECKOUT FORM ---------- */
+form input, form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-weight: 500;
+}
+
+form button {
+    background: #ffdd59;
+    border: none;
+    color: #0a74da;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+form button:hover {
+    background: #ffd32a;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #0a74da;
+    color: #fff;
+    margin-top: 50px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+
+    .products {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 25px;
+    }
+
+    td input[type="number"] {
+        width: 35px;  /* slightly smaller on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .products {
+        grid-template-columns: 1fr;
+    }
+
+    form button {
+        width: 100%;
+    }
+}
+
+/* ---------- HEADER LOGO ---------- */
+.website-logo {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.website-logo img {
+    max-height: 120px;
+    width: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.website-logo img:hover {
+    transform: scale(1.05);
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #ffdd59;
+    color: #0a74da;
+    font-weight: 700;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    background: #ffd32a;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ---------- BUTTONS ---------- */
+button, .btn {
+    background: #0a74da;
+    color: #fff;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background: #005bb5;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* ---------- CART BUTTONS ---------- */
+.cart-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.cart-buttons .btn {
+    flex: 1;
+    text-align: center;
+}
+
+/* ---------- DYNAMIC MESSAGE STYLE ---------- */
+.flash-message {
+    background: #ffdd59;
+    color: #0a74da;
+    font-weight: 700;
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}

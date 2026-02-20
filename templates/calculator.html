@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Solar Calculator - Solare{% endblock %}
+
+{% block content %}
+<h2>Solar Energy Calculator</h2>
+
+<p>Choose the appliances you use daily and whether you want to be fully off-grid. We'll estimate your daily kWh usage and suggest the solar products you might need.</p>
+
+<form method="POST">
+    <h3>Daily Appliances</h3>
+    {% for appliance in appliance_list %}
+        <label>
+            <input type="checkbox" name="appliances" value="{{ appliance }}">
+            {{ appliance }}
+        </label><br>
+    {% endfor %}
+
+    <h3>Do you want to be fully off-grid?</h3>
+    <label>
+        <input type="radio" name="offgrid" value="yes"> Yes
+    </label>
+    <label>
+        <input type="radio" name="offgrid" value="no" checked> No
+    </label>
+
+    <br><br>
+    <button type="submit">Calculate</button>
+</form>
+
+{% if total_kwh is not none %}
+<hr>
+<h3>Estimated Daily Usage: {{ total_kwh | round(2) }} kWh</h3>
+
+<h3>Recommended Products:</h3>
+<ul>
+    {% for product in recommendations %}
+        <li>{{ product }}</li>
+    {% endfor %}
+</ul>
+
+<form action="{{ url_for('consultation') }}" method="POST">
+    <button type="submit">Request a Consultation</button>
+</form>
+
+{% endif %}
+{% endblock %}

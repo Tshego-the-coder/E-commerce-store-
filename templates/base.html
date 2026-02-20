@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Solare Energy {% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+
+<header>
+    <div class="website-logo">
+        <img src="{{ url_for('static', filename='logosolar.jpg') }}" alt="Tshego Technological Solutions Logo">
+        <h1>Tshego Technological Solutions</h1>
+    </div>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        {% if session.get('username') %}
+            <a href="{{ url_for('cart_page') }}">Cart</a>
+            <a href="{{ url_for('calculator') }}">Consultancy </a>
+            <a href="{{ url_for('checkout') }}">Checkout</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% if session.get('username') == 'admin' %}
+                <a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a>
+            {% endif %}
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<div class="flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+</div>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    &copy; 2026 Solare. All rights reserved.<br>
+    &copy; <a href="{{ url_for('about') }}">Created by Tshego Technological Solutions </a>
+</footer>
+
+</body>
+</html>

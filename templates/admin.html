@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Solare{% endblock %}
+
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+    <h2>Admin Dashboard</h2>
+    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+</div>
+
+<h3>Registered Users</h3>
+{% if users %}
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No users found.</p>
+{% endif %}
+
+<h3 style="margin-top:40px;">Orders</h3>
+{% if orders %}
+{% for order in orders %}
+<div style="margin-bottom:30px; padding:15px; border-radius:12px; background:#f0f3ff; box-shadow:0 4px 12px rgba(0,0,0,0.1);">
+    <h4>Order #{{ order.id }} by {{ order.user.username }} on {{ order.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</h4>
+    {% if order.parsed_items %}
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.parsed_items %}
+            <tr>
+                <td>{{ item['name'] }}</td>
+                <td>{{ item['quantity'] }}</td>
+                <td>R{{ "%.2f"|format(item['price']) }}</td>
+                <td>R{{ "%.2f"|format(item['quantity'] * item['price']) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No items in this order.</p>
+    {% endif %}
+    <h4 style="text-align:right;">Total: R{{ "%.2f"|format(order.total) }}</h4>
+</div>
+{% endfor %}
+{% else %}
+<p>No orders found.</p>
+{% endif %}
+{% endblock %}

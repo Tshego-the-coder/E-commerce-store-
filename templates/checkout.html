@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - Solare{% endblock %}
+
+{% block content %}
+<h2>Checkout</h2>
+
+{% if cart %}
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>R{{ item.price }}</td>
+            <td>R{{ item.quantity * item.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Total: R{{ total_amount }}</h3>
+
+<form id="paystackForm" method="POST">
+    <input type="hidden" name="email" value="{{ customer_email }}">
+    <input type="hidden" name="amount" value="{{ (total_amount*100)|int }}"> 
+    <button type="button" onclick="payWithPaystack()">Pay Now</button>
+</form>
+
+<script src="https://js.paystack.co/v1/inline.js"></script>
+<script>
+function payWithPaystack(){
+    let handler = PaystackPop.setup({
+        key: '#',  // replace with your Paystack public key
+        email: '{{ customer_email }}',
+        amount: {{ (total_amount*100)|int }},
+        currency: "ZAR",
+        callback: function(response){
+            fetch('{{ url_for("checkout") }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ reference: response.reference })
+            }).then(res => {
+                if(res.ok){
+                    window.location.href = '/';
+                }
+            });
+        },
+        onClose: function(){
+            alert('Payment cancelled');
+        }
+    });
+    handler.openIframe();
+}
+</script>
+
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+{% endblock %}

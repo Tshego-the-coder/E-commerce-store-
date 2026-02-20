@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Home - Solare{% endblock %}
+
+{% block content %}
+<h2>Our Products</h2>
+<div class="products">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{{ url_for('static', filename=product.image.split('static/')[-1]) }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>Price: R{{ product.price }}</p>
+        <p class="delivery">Delivery: {{ product.delivery }}</p>
+        <button class="add-to-cart" data-id="{{ product.id }}">Add to Cart</button>
+    </div>
+    {% endfor %}
+</div>
+<!-- Go to Cart button placeholder -->
+<div id="go-to-cart-container" style="position:fixed;bottom:30px;right:30px;display:none;z-index:1000;">
+    <a href="{{ url_for('cart_page') }}" 
+       style="padding:12px 25px;background:#0a74da;color:#fff;border-radius:12px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
+       Go to Cart
+    </a>
+</div>
+<div id="go-to-cart-container" style="display:none; text-align:center; margin-top:30px;">
+    <a href="{{ url_for('cart_page') }}" class="btn">Go to Cart</a>
+</div>
+
+
+<script>
+const buttons = document.querySelectorAll('.add-to-cart');
+const goCartContainer = document.getElementById('go-to-cart-container');
+
+buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const productId = btn.getAttribute('data-id');
+        fetch('{{ url_for("add_to_cart") }}', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `product_id=${productId}`
+        }).then(res => res.json()).then(data => {
+            // Change button text
+            btn.innerText = 'Added';
+            btn.disabled = true;
+
+            // Show the "Go to Cart" button below products
+            goCartContainer.style.display = 'block';
+        });
+    });
+});
+</script>
+
+{% endblock %}

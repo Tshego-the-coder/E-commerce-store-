@@ -1,0 +1,17 @@
+# Virtual environment
+storevenv/
+
+# Secrets
+.env
+
+# Local database
+instance/
+*.db
+
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# OS files
+.DS_Store
+Thumbs.db

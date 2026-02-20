@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Cart - Solare{% endblock %}
+
+{% block content %}
+<h2>Your Cart</h2>
+<form method="POST">
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td><input type="number" name="quantity_{{ item.id }}" value="{{ item.quantity }}"></td>
+            <td>R{{ item.price }}</td>
+            <td>R{{ item.price * item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<h3>Total: R{{ total_amount }}</h3>
+<button type="submit">Update Cart</button>
+<a href="{{ url_for('checkout') }}"><button type="button">Checkout</button></a>
+</form>
+{% endblock %}
